@@ -1,6 +1,7 @@
 import telebot
 from telebot import types
 import time
+import DB_CON
 
 api_token= "api"
 bot = telebot.TeleBot(api_token)
