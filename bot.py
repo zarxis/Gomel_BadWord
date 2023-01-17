@@ -14,17 +14,21 @@ def start(message):
     markup.add(key1, key2)
     bot.send_message(message.chat.id, "Захотел узнать как часто ты использешь BAD WORDS? Правильно, ты по адресу!", reply_markup=markup)
 
+
 #просто пихать будем тут функции, да я говно-кодер
 
+#
 @bot.message_handler(commands=['Stat'])
 def stat(message):
     bot.send_message(message.chat.id, "самый большой матершинник это...")
     time.sleep(1)
     bot.send_message(message.chat.id, "ты")
 
+#
 @bot.message_handler(commands=['ShowId'])
 def my_id(message):
     user_id = message.from_user.id
     bot.send_message(message.chat.id, user_id)
+
 
 bot.infinity_polling()
