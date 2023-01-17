@@ -3,7 +3,7 @@ from telebot import types
 import time
 import DB_CON
 
-api_token= "api"
+api_token= "5811388544:AAGfs2JxfxB7SBHsRDjhWMmDAmqngEUIXi0"
 bot = telebot.TeleBot(api_token)
 
 
@@ -31,5 +31,4 @@ def my_id(message):
     user_id = message.from_user.id
     bot.send_message(message.chat.id, user_id)
 
-
-bot.infinity_polling()
+bot.polling(none_stop=True, interval=0)
