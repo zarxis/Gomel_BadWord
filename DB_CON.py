@@ -6,5 +6,4 @@ with con:
     cur.execute("CREATE TABLE IF NOT EXISTS `test` (id INTEGER64)")
     con.commit
     cur.close()
-    print("done")
 cur.close()

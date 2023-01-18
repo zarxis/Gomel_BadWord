@@ -1,9 +1,7 @@
-import telebot
+import telebot, time, DB_CON
 from telebot import types
-import time
-import DB_CON
 
-api_token= "5811388544:AAGfs2JxfxB7SBHsRDjhWMmDAmqngEUIXi0"
+api_token= "api"
 bot = telebot.TeleBot(api_token)
 
 
@@ -18,6 +16,11 @@ def start(message):
 
 #просто пихать будем тут функции, да я говно-кодер
 
+#@bot.message_handler(commands=['.getME'])
+#def getME(message):
+#    n = bot.get_me()
+#    bot.send_message(message.chat.id, n)
+
 #
 @bot.message_handler(commands=['Stat'])
 def stat(message):
@@ -31,4 +34,4 @@ def my_id(message):
     user_id = message.from_user.id
     bot.send_message(message.chat.id, user_id)
 
-bot.polling(none_stop=True, interval=0)
+ bot.polling(none_stop=True, interval=0)
