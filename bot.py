@@ -28,14 +28,20 @@ def start(message):
 def stat(message):
     bot.send_message(message.chat.id, "Введите название города.")
     bot.register_next_step_handler(message, GetWeather, message.chat.id)
-    
+
+@bot.message_handler(content_types='text')
 def GetWeather(mesInfo, mesId):
     sityName = mesInfo.text
     gismeteo=Gismeteo()
-    if isinstance(sityName, str):
+    if isinstance(sityName, str): 
         search_results = gismeteo.search.by_query(sityName)
         city_id = search_results[0].id
         current = gismeteo.current.by_id(city_id)
+##_____ Чекни        temp = current.temperature.air.c
+##_____ эти       d_weather = current.description.full
+##_____ строки       hum = current.humidity.percent
+##_____ плиз       cloud = current.cloudiness.percent
+##_____        bot.send_message(message.chat_id, "Текущая температура: " + f'{temp}' +'\n'"Влажность: " + f'{d_weather}' + '\n'"Влажность: " + f'{hum}' + '\n'"Облачность: " + f'{cloud}')
         A = str(current.temperature.air.c) + ", " + current.description.full
         A = A + ", " + str(current.humidity.percent) + ", " + str(current.cloudiness.percent)
         bot.send_message(mesId, sityName)
