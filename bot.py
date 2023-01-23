@@ -2,9 +2,8 @@ import telebot, time, DB_CON, Fweather
 from telebot import types
 from pygismeteo import Gismeteo
 
-api_token= "api"
+api_token= "5811388544:AAGfs2JxfxB7SBHsRDjhWMmDAmqngEUIXi0"
 bot = telebot.TeleBot(api_token)
-
 
 @bot.message_handler(commands=['start'])
 def start(message):
@@ -23,13 +22,20 @@ def start(message):
 #    n = bot.get_me()
 #    bot.send_message(message.chat.id, n)
 
-#
+
+# Stat
+@bot.message_handler(commands=['Stat'])
+def stat(message):
+    bot.send_message(message.chat.id, "самый большой матершинник это...")
+    time.sleep(1)
+    bot.send_message(message.chat.id, "ты")
+
+# Погода
 @bot.message_handler(commands=['Weather'])
 def stat(message):
     bot.send_message(message.chat.id, "Введите название города.")
     bot.register_next_step_handler(message, GetWeather, message.chat.id)
 
-@bot.message_handler(content_types='text')
 def GetWeather(mesInfo, mesId):
     sityName = mesInfo.text
     gismeteo=Gismeteo()
@@ -55,14 +61,9 @@ def GetWeather(mesInfo, mesId):
     else:
         bot.send_message(mesId, "ERROR")
     
-#
-@bot.message_handler(commands=['Stat'])
-def stat(message):
-    bot.send_message(message.chat.id, "самый большой матершинник это...")
-    time.sleep(1)
-    bot.send_message(message.chat.id, "ты")
 
-#
+
+# будущая регистрация в боте.
 @bot.message_handler(commands=['ShowId'])
 def my_id(message):
     user_id = message.from_user.id
