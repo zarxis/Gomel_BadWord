@@ -72,4 +72,4 @@ def my_id(message):
     user_id = message.from_user.id
     bot.send_message(message.chat.id, user_id)
 
-bot.polling(none_stop=True, interval=0)
+bot.infinity_polling()
