@@ -45,19 +45,19 @@ def GetWeather(mesInfo, mesId):
         current = gismeteo.current.by_id(city_id)
         
         
-        """ Вот эту часть чекни пжлст
         temp = current.temperature.air.c
         d_weather = current.description.full
         hum = current.humidity.percent
         cloud = current.cloudiness.percent
-        bot.send_message(message.chat_id, "Текущая температура: " + f'{temp}' +'\n'"Влажность: " + f'{d_weather}' + '\n'"Влажность: " + f'{hum}' + '\n'"Облачность: " + f'{cloud}')
-        """
+        bot.send_message(mesId, "Текущая температура🌍: " + f'{temp}' +'\n'"Тип погоды🌍: " + f'{d_weather}' + '\n'"Влажность🌍: " + f'{hum}' + '\n'"Облачность🌍: " + f'{cloud}')
         
         
+        """        
         A = str(current.temperature.air.c) + ", " + current.description.full
         A = A + ", " + str(current.humidity.percent) + ", " + str(current.cloudiness.percent)
         bot.send_message(mesId, sityName)
         bot.send_message(mesId, A)
+        """
     else:
         bot.send_message(mesId, "ERROR")
     
