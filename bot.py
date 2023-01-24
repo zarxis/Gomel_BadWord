@@ -49,7 +49,10 @@ def GetWeather(mesInfo, mesId):
         d_weather = current.description.full
         hum = current.humidity.percent
         cloud = current.cloudiness.percent
-        bot.send_message(mesId, "Текущая температура🌍: " + f'{temp}' +'\n'"Тип погоды🌍: " + f'{d_weather}' + '\n'"Влажность🌍: " + f'{hum}' + '\n'"Облачность🌍: " + f'{cloud}')
+        bot.send_message(mesId, "Текущая температура🌍: " + f'{temp}'
+                         +'\n'"Тип погоды🌍: " + f'{d_weather}'
+                         + '\n'"Влажность🌍: " + f'{hum}'
+                         + '\n'"Облачность🌍: " + f'{cloud}')
         
         
         """        
