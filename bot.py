@@ -81,7 +81,7 @@ def get_text_message(message):
         u_reg = message.from_user.id
         u_fname = message.from_user.username
         u_lname = message.from_user.last_name
-        sql.db_table_val(user_id = u_reg, first_name = u_fname, last_name = u_lname)
+        sql.db_INSERT(user_id = u_reg, first_name = u_fname, last_name = u_lname)
         bot.send_message(message.from_user.id, 'Поздравляю, теперь ты зарегестрирован :)')
     except:
         bot.send_message(message.chat.id, 'Ты уже зарегистрирован')
