@@ -10,9 +10,10 @@ bot = telebot.TeleBot(api_token)
 @bot.message_handler(commands=['start'])
 def start(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    key2 = types.KeyboardButton("/Stat")
+    #key = types.KeyboardButton("/Stat")
     key1 = types.KeyboardButton("/Weather")
-    markup.add(key1, key2, key3)
+    key2 = types.KeyboardButton("/register")
+    markup.add(key1, key2)
     bot.send_message(message.chat.id, "Захотел узнать как часто ты использешь BAD WORDS? Правильно, ты по адресу!", reply_markup=markup)
 
 
@@ -26,16 +27,18 @@ def start(message):
 
 
 # Stat
+"""
 @bot.message_handler(commands=['Stat'])
 def stat(message):
     bot.send_message(message.chat.id, "самый большой матершинник это...")
     time.sleep(1)
     bot.send_message(message.chat.id, "ты")
+"""
 
 # Погода ----------------------------
 @bot.message_handler(commands=['Weather'])
 
-def stat(message):
+def startW(message):
     bot.send_message(message.chat.id, "Введите название города.")
     bot.register_next_step_handler(message, GetWeather, message.chat.id)
 
@@ -56,9 +59,8 @@ def GetWeather(mesInfo, mesId):
                          +'\n'"Тип погоды🌍: " + f'{d_weather}'
                          + '\n'"Влажность🌍: " + f'{hum}'
                          + '\n'"Облачность🌍: " + f'{cloud}')
-        print(search_results)
-        
-         
+        #print(search_results)
+ 
         """        
         A = str(current.temperature.air.c) + ", " + current.description.full
         A = A + ", " + str(current.humidity.percent) + ", " + str(current.cloudiness.percent)
@@ -70,15 +72,19 @@ def GetWeather(mesInfo, mesId):
     
 
 
-# будущая регистрация в боте.
-@bot.message_handler(commands=['ShowId'])
+#обдащение в бд
+@bot.message_handler(commands=['register'])
 def get_text_message(message):
-    bot.send_message(message.from_user.id, 'Теперь ты в системе')
+    #Запись в бдшку
+    try:
+        #привидение переменных для бд
+        u_reg = message.from_user.id
+        u_fname = message.from_user.username
+        u_lname = message.from_user.last_name
+        sql.db_table_val(user_id = u_reg, first_name = u_fname, last_name = u_lname)
+        bot.send_message(message.from_user.id, 'Поздравляю, теперь ты зарегестрирован :)')
+    except:
+        bot.send_message(message.chat.id, 'Ты уже зарегистрирован')
     
-    u_reg = message.from_user.id
-    u_fname = message.from_user.username
-    u_lname = message.from_user.last_name
-        
-    sql.db_table_val(user_id = u_reg, first_name = u_fname, last_name = u_lname)
 
-bot.polling(none_stop=True)
+bot.polling(True)
