@@ -1,4 +1,4 @@
-import telebot, time, sql
+import telebot, time, sql, logging, sys
 from telebot import types
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 
@@ -14,7 +14,9 @@ def start(message):
     key1 = types.KeyboardButton("/Weather")
     key2 = types.KeyboardButton("/register")
     markup.add(key1, key2)
-    bot.send_message(message.chat.id, "Захотел узнать как часто ты использешь BAD WORDS? Правильно, ты по адресу!", reply_markup=markup)
+    bot.send_message(message.chat.id,
+                     "Захотел узнать как часто ты использешь BADWORDS? Правильно, ты по адресу!",
+                     reply_markup=markup)
 
 
 
@@ -27,17 +29,17 @@ def start(message):
 
 
 # Stat
-"""
-@bot.message_handler(commands=['Stat'])
-def stat(message):
-    bot.send_message(message.chat.id, "самый большой матершинник это...")
-    time.sleep(1)
-    bot.send_message(message.chat.id, "ты")
-"""
+
+#@bot.message_handler(commands=['Stat'])
+#def stat(message):
+#    
+#    bot.send_message(message.chat.id, "самый большой матершинник это...")
+#    time.sleep(1)
+#    bot.send_message(message.chat.id, "ты")
+
 
 # Погода ----------------------------
 @bot.message_handler(commands=['Weather'])
-
 def startW(message):
     bot.send_message(message.chat.id, "Введите название города.")
     bot.register_next_step_handler(message, GetWeather, message.chat.id)
@@ -47,9 +49,11 @@ def GetWeather(mesInfo, mesId):
     gismeteo=Gismeteo()
     if isinstance(sityName, str): 
         search_results = gismeteo.search.by_query(sityName)
+        #print(search_results)
         city_id = search_results[0].id
-
+        #print('\n------------------------------', city_id)
         current = gismeteo.current.by_id(city_id)
+        #print('\n -------------------------------', current)
         
         temp = current.temperature.air.c
         d_weather = current.description.full
@@ -59,18 +63,7 @@ def GetWeather(mesInfo, mesId):
                          +'\n'"Тип погоды🌍: " + f'{d_weather}'
                          + '\n'"Влажность🌍: " + f'{hum}'
                          + '\n'"Облачность🌍: " + f'{cloud}')
-        #print(search_results)
- 
-        """        
-        A = str(current.temperature.air.c) + ", " + current.description.full
-        A = A + ", " + str(current.humidity.percent) + ", " + str(current.cloudiness.percent)
-        bot.send_message(mesId, sityName)
-        bot.send_message(mesId, A)
-        """
-    else:
-        bot.send_message(mesId, "ERROR")
-    
-
+        
 
 #обдащение в бд
 @bot.message_handler(commands=['register'])
@@ -81,10 +74,18 @@ def get_text_message(message):
         u_reg = message.from_user.id
         u_fname = message.from_user.username
         u_lname = message.from_user.last_name
-        sql.db_INSERT(user_id = u_reg, first_name = u_fname, last_name = u_lname)
+        u_stat = 0
+        sql.db_INSERT(user_id = u_reg, first_name = u_fname, last_name = u_lname, stat = u_stat)
         bot.send_message(message.from_user.id, 'Поздравляю, теперь ты зарегестрирован :)')
     except:
         bot.send_message(message.chat.id, 'Ты уже зарегистрирован')
-    
 
-bot.polling(True)
+
+
+while True:
+    try:
+      bot.polling(none_stop=True)
+    except: 
+      print('ERR')
+      logging.error('error: {}'.format(sys.exc_info()[0]))
+      time.sleep(5)
