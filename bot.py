@@ -22,17 +22,11 @@ def start(message):
 
 #просто пихать будем тут функции, да я говно-кодер
 
-#@bot.message_handler(commands=['.getME'])
-#def getME(message):
-#    n = bot.get_me()
-#    bot.send_message(message.chat.id, n)
-
-
-# Stat
 
 #@bot.message_handler(commands=['Stat'])
 #def stat(message):
 #    
+#
 #    bot.send_message(message.chat.id, "самый большой матершинник это...")
 #    time.sleep(1)
 #    bot.send_message(message.chat.id, "ты")
@@ -53,16 +47,16 @@ def GetWeather(mesInfo, mesId):
         city_id = search_results[0].id
         #print('\n------------------------------', city_id)
         current = gismeteo.current.by_id(city_id)
-        #print('\n -------------------------------', current)
+        #print(f'\n -------------------------------', current)
         
         temp = current.temperature.air.c
         d_weather = current.description.full
         hum = current.humidity.percent
         cloud = current.cloudiness.percent
         bot.send_message(mesId, "Текущая температура🌍: " + f'{temp}'
-                         +'\n'"Тип погоды🌍: " + f'{d_weather}'
-                         + '\n'"Влажность🌍: " + f'{hum}'
-                         + '\n'"Облачность🌍: " + f'{cloud}')
+                         '\n'"Тип погоды🌍: " f'{d_weather}'
+                          '\n'"Влажность🌍: " f'{hum}%'
+                          '\n'"Облачность🌍: " f'{cloud}%')
         
 
 #обдащение в бд
@@ -75,7 +69,7 @@ def get_text_message(message):
         u_fname = message.from_user.username
         u_lname = message.from_user.last_name
         u_stat = 0
-        sql.db_INSERT(user_id = u_reg, first_name = u_fname, last_name = u_lname, stat = u_stat)
+        sql.db_CON.INSERT(user_id = u_reg, first_name = u_fname, last_name = u_lname, stat = u_stat)
         bot.send_message(message.from_user.id, 'Поздравляю, теперь ты зарегестрирован :)')
     except:
         bot.send_message(message.chat.id, 'Ты уже зарегистрирован')
