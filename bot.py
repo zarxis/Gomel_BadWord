@@ -4,7 +4,7 @@ from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 from pygismeteo import Gismeteo
 
-api_token= "5811388544:AAGfs2JxfxB7SBHsRDjhWMmDAmqngEUIXi0"
+api_token= ""
 bot = telebot.TeleBot(api_token)
 
 @bot.message_handler(commands=['start'])
